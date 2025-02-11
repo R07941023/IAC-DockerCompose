@@ -1,0 +1,31 @@
+version: '3'
+
+volumes:
+
+  nfs_mariadb:
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.100.145,nolock,soft,rw"
+      device: ":/volume1/backend/storage/mariadb"
+
+
+services:
+
+  mariadb:
+    image: mariadb
+    ports:
+      - 10370:3306
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - nfs_mariadb:/var/lib/mysql
+    networks:
+      - backend_net
+    user: "1024"
+
+networks:
+  backend_net:

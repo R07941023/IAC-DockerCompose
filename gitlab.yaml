@@ -1,0 +1,25 @@
+version: '3.8'
+
+volumes:
+  nfs_storage:
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.100.145,nolock,soft,rw"
+      device: ":/volume1/backend/storage"
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest 
+    container_name: gitlab
+    restart: always
+    hostname: "gitlab"
+    volumes:
+      - nfs_storage:/mnt
+    ports:
+      - "30832:80"
+      - "30500:443"
+    networks:
+      - backend_net
+
+networks:
+  backend_net:

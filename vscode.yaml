@@ -1,0 +1,38 @@
+version: '3'
+
+volumes:
+  nfs_YYLUI:
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.100.145,nolock,soft,rw"
+      device: ":/volume1/backend/project/YYLUI"
+
+  nfs_vscode_config:
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.100.145,nolock,soft,rw"
+      device: ":/volume1/backend/compiler/vscode/config" 
+
+services:
+  vscode-server:
+    image: yenyinglu/vscode
+    container_name: vscode
+    hostname: "vscode-server"
+    ports:
+      - "127.0.0.1:30101:3000"
+      - "127.0.0.1:30810:8090"
+      - "127.0.0.1:30201:8091"
+    volumes:
+      - nfs_YYLUI:/home/coder/project
+      - nfs_vscode_config:/home/coder/.config/code-server
+    environment:
+      - WATCHPACK_POLLING=true
+      - PASSWORD=${VSCODE_YYLUI_PASSWORD}
+    command: ["code-server", "--auth", "password", "--disable-telemetry", "--bind-addr", "0.0.0.0:8090"]
+    networks:
+      - backend_net
+    restart: always
+
+networks:
+  backend_net:
+

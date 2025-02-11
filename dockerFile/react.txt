@@ -1,0 +1,18 @@
+FROM node:14.18-alpine3.15
+
+# 更新包列表並安裝 bash 和 openssh
+RUN apk update && apk add bash openssh
+
+# 配置 SSH 服務器
+RUN ssh-keygen -A && \
+    echo "PermitRootLogin yes" >> /etc/ssh/sshd_config && \
+    echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+
+# 設置 root 密碼
+RUN echo "root:root" | chpasswd
+
+# 啟動 SSH 服務器
+CMD ["/usr/sbin/sshd", "-D"]
+
+# 設置工作目錄為 /mnt
+WORKDIR /mnt

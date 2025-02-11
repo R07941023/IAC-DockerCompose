@@ -1,0 +1,44 @@
+version: '3.8'
+
+volumes:
+  nfs_YYLUI:
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.100.145,nolock,soft,rw"
+      device: ":/volume1/backend/project/YYLUI"
+
+services:
+  jupyter:
+    build:
+      context: .
+      dockerfile: dockerFile/jupyter.txt
+    image: yenyinglu/jupyter
+    privileged: true
+    container_name: jupyter
+    hostname: "jupyter"
+    volumes:
+      - nfs_YYLUI:/mnt
+    ports:
+      - "30820:8888"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    networks:
+      - backend_net
+    restart: always
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - JUPYTER_PASSWORD=${JUPYTER_PASSWORD}
+    command: >
+      /bin/bash -c "
+        /root/init.sh &&
+        source activate torch &&
+        jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root"
+
+networks:
+  backend_net:
+

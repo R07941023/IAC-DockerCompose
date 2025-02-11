@@ -1,0 +1,20 @@
+ # 使用 NVIDIA CUDA 基础镜像
+FROM nvidia/cuda:11.2.2-cudnn8-runtime-ubuntu20.04
+
+# 安装 Miniconda
+RUN apt-get update && apt-get install -y wget bzip2 && \
+    wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    bash Miniconda3-latest-Linux-x86_64.sh -b -p /opt/conda && \
+    rm Miniconda3-latest-Linux-x86_64.sh && \
+    /opt/conda/bin/conda clean --all -f -y && \
+    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    echo "conda activate base" >> ~/.bashrc
+
+ENV PATH /opt/conda/bin:$PATH
+
+# 创建 conda 环境并安装 JupyterLab 和其他必要的包
+RUN conda create -n torch python=3.9 && \
+    conda install -n torch jupyterlab && \
+    conda clean -a
+
