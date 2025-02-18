@@ -52,11 +52,18 @@ gitlab-ctl reconfigure
 ```
 ### data
 ```bash
+# stop the service
 gitlab-ctl stop puma
 gitlab-ctl stop sidekiq
+
+# copy the backup files
 cp /mnt/gitlab/gitlab-secrets.json /etc/gitlab/gitlab-secrets.json
 cp /mnt/gitlab/{file} /var/opt/gitlab/backups/
 chown git.git /var/opt/gitlab/backups/{file}
+
+# recovery the data
 gitlab-rake gitlab:backup:restore
+
+# restart the service
 gitlab-ctl restart
 ```
