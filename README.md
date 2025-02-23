@@ -33,37 +33,4 @@ docker-compose f {fileName} down
 ```
 
 # Gitlab
-## backup
-### secret and rb (only change)
-```bash
-cp /etc/gitlab/gitlab-secrets.json /mnt/gitlab/
-cp /etc/gitlab/gitlab.rb /mnt/gitlab/
-```
-### data
-```bash
-gitlab-rake gitlab:backup:create
-cp /var/opt/gitlab/backups/{file} /mnt/gitlab/
-```
-## recovery
-### rb (only change)
-```bash
-cp /mnt/gitlab/gitlab.rb /etc/gitlab/gitlab.rb
-gitlab-ctl reconfigure
-```
-### data
-```bash
-# stop the service
-gitlab-ctl stop puma
-gitlab-ctl stop sidekiq
-
-# copy the backup files
-cp /mnt/gitlab/gitlab-secrets.json /etc/gitlab/gitlab-secrets.json
-cp /mnt/gitlab/{file} /var/opt/gitlab/backups/
-chown git.git /var/opt/gitlab/backups/{file}
-
-# recovery the data
-gitlab-rake gitlab:backup:restore
-
-# restart the service
-gitlab-ctl restart
-```
+https://medium.com/@a5822358/gitlab-72a1b32b5b5b
