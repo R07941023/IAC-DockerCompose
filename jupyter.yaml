@@ -19,7 +19,7 @@ services:
     volumes:
       - nfs_YYLUI:/mnt
     ports:
-      - "30820:8888"
+      - "10820:8888"
     deploy:
       resources:
         reservations:
