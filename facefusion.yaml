@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  jupyter:
+    image: yenyinglu/facefusion
+    privileged: true
+    container_name: facefusion
+    hostname: "facefusion"
+    ports:
+      - "10821:7860"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    networks:
+      - backend_net
+    restart: always
+    runtime: nvidia
+    environment:
+      - FACEFUSION_PASSWORD=${FACEFUSION_PASSWORD}
+      - CUDA_VISIBLE_DEVICES=0
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    command: >
+      bash -c "source /opt/conda/etc/profile.d/conda.sh &&
+      conda activate facefusion &&
+      cd /root/facefusion &&
+      python facefusion.py run"
+
+networks:
+  backend_net:
