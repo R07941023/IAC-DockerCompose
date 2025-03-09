@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  jupyter:
+  facefusion:
     image: yenyinglu/facefusion
     privileged: true
     container_name: facefusion
@@ -27,9 +27,10 @@ services:
       - CUDA_VISIBLE_DEVICES=0
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
     command: >
-      bash -c "source /opt/conda/etc/profile.d/conda.sh &&
+      bash -c "cd /root/facefusion &&
+      git pull &&
+      source /opt/conda/etc/profile.d/conda.sh &&
       conda activate facefusion &&
-      cd /root/facefusion &&
       python facefusion.py run"
 
 networks:
