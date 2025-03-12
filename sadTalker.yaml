@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  sadtalker:
+    image: yenyinglu/sadtalker
+    privileged: true
+    container_name: sadtalker
+    hostname: "sadtalker"
+    ports:
+      - "10822:7860"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    networks:
+      - backend_net
+    restart: always
+    runtime: nvidia
+    environment:
+      - SADTALKER_PASSWORD=${SADTALKER_PASSWORD}
+      - SADTALKER_USER1=${SADTALKER_USER1}
+      - SADTALKER_PASSWORD1=${SADTALKER_PASSWORD1}
+      - SADTALKER_USER2=${SADTALKER_USER2}
+      - SADTALKER_PASSWORD2=${SADTALKER_PASSWORD2}
+      - CUDA_VISIBLE_DEVICES=0
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    command: >
+          bash -c "cd /root/SadTalker &&
+          git reset --hard origin/dev &&
+          source /opt/conda/etc/profile.d/conda.sh &&
+          conda activate sadtalker &&
+          python app_sadtalker.py run"
+networks:
+  backend_net:
