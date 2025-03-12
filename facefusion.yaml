@@ -28,7 +28,7 @@ services:
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
     command: >
       bash -c "cd /root/facefusion &&
-      git pull &&
+      git reset --hard origin/dev &&
       source /opt/conda/etc/profile.d/conda.sh &&
       conda activate facefusion &&
       python facefusion.py run"
