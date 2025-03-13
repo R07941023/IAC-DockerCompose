@@ -27,7 +27,7 @@ services:
       - CUDA_VISIBLE_DEVICES=0
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
     command: >
-          bash -c "cd /root/SadTalker &&
+          bash -c "cd /root/sadtalker &&
           git reset --hard origin/dev &&
           source /opt/conda/etc/profile.d/conda.sh &&
           conda activate sadtalker &&
