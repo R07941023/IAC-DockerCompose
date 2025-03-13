@@ -34,3 +34,23 @@ docker-compose f {fileName} down
 
 # Gitlab
 https://medium.com/@a5822358/gitlab-72a1b32b5b5b
+
+# docker desktop
+```bash
+{
+  "builder": {
+    "gc": {
+      "defaultKeepStorage": "20GB",
+      "enabled": true
+    }
+  },
+  "default-runtime": "nvidia",
+  "experimental": false,
+  "runtimes": {
+    "nvidia": {
+      "path": "nvidia-container-runtime",
+      "runtimeArgs": []
+    }
+  }
+}
+```

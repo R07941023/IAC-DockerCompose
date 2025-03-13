@@ -9,7 +9,7 @@ volumes:
 
 services:
   gitlab:
-    image: gitlab/gitlab-ce:latest 
+    image: gitlab/gitlab-ce:17.0.1-ce.0
     container_name: gitlab
     restart: always
     hostname: "gitlab"
