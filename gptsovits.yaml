@@ -1,0 +1,64 @@
+version: '3.8'
+
+volumes:
+  nfs_gptsovits_model:
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.100.145,nolock,soft,rw"
+      device: ":/volume1/backend/storage/gptsovits/model"
+  nfs_gptsovits_output:
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.100.145,nolock,soft,rw"
+      device: ":/volume1/backend/storage/gptsovits/output"
+  nfs_gptsovits_reference:
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.100.145,nolock,soft,rw"
+      device: ":/volume1/backend/storage/gptsovits/reference"
+  nfs_gptsovits_SoVITS_weights:
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.100.145,nolock,soft,rw"
+      device: ":/volume1/backend/storage/gptsovits/SoVITS_weights"
+
+services:
+  gptsovits:
+    image: breakstring/gpt-sovits:latest   # please change the image name and tag base your environment. If the tag contains the word 'elite', such as "latest-elite", it indicates that the image does not include the necessary models such as GPT-SoVITS, UVR5, Damo ASR, etc. You will need to download them yourself and map them into the container.
+    container_name: gptsovits
+    privileged: true
+    environment:
+      - is_half=False
+      - is_share=False
+      - GPTSOVITS_PASSWORD=${GPTSOVITS_PASSWORD}
+      - GPTSOVITS_USER1=${GPTSOVITS_USER1}
+      - GPTSOVITS_PASSWORD1=${GPTSOVITS_PASSWORD1}
+      - GPTSOVITS_USER2=${GPTSOVITS_USER2}
+      - GPTSOVITS_PASSWORD2=${GPTSOVITS_PASSWORD2}
+      - CUDA_VISIBLE_DEVICES=0
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    volumes:
+      - nfs_gptsovits_model:/workspace/model
+      - nfs_gptsovits_output:/workspace/output
+      - nfs_gptsovits_reference:/workspace/reference
+      - nfs_gptsovits_SoVITS_weights:/workspace/SoVITS_weights
+    working_dir: /workspace
+    ports:
+      - "9874:10823"
+      - "9872:10824"
+    shm_size: 16G
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            capabilities: [gpu]
+    stdin_open: true
+    tty: true
+    networks:
+      - backend_net
+    restart: always
+    runtime: nvidia
+
+networks:
+  backend_net:
