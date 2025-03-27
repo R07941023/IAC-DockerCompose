@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  facefusion:
+    image: yenyinglu/facefusion
+    privileged: true
+    container_name: facefusion
+    hostname: "facefusion"
+    ports:
+      - "10821:7860"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    networks:
+      - backend_net
+    restart: always
+    runtime: nvidia
+    environment:
+      - FACEFUSION_PASSWORD=${FACEFUSION_PASSWORD}
+      - FACEFUSION_USER1=${FACEFUSION_USER1}
+      - FACEFUSION_PASSWORD1=${FACEFUSION_PASSWORD1}
+      - FACEFUSION_USER2=${FACEFUSION_USER2}
+      - FACEFUSION_PASSWORD2=${FACEFUSION_PASSWORD2}
+      - CUDA_VISIBLE_DEVICES=0
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    command: >
+      bash -c "cd /root/facefusion &&
+      git reset --hard origin/dev &&
+      source /opt/conda/etc/profile.d/conda.sh &&
+      conda activate facefusion &&
+      python facefusion.py run"
+
+networks:
+  backend_net:

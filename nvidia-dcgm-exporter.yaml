@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  dcgm-exporter:
+    image: nvcr.io/nvidia/k8s/dcgm-exporter:3.2.3-3.1.6-ubuntu20.04
+    ports:
+      - "9400:9400"
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    restart: always
