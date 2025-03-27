@@ -1,0 +1,41 @@
+version: "3.8"
+
+volumes:
+  nfs_mapleStory_server:
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.100.145,nolock,soft,rw"
+      device: ":/volume1/backend/project/YYLUI/mapleStory/server"
+
+services:
+  maplestory-dev:
+    image: yenyinglu/maplestory
+    container_name: maplestory-dev
+    hostname: "maplestory-dev"
+    working_dir: /app
+    command: >
+      bash -c "
+        Xvfb :0 -screen 0 1024x768x16 &
+        export DISPLAY=:0 &&
+        ./run.sh
+      "
+    ports:
+      # login
+      - "127.0.0.1:8484:8484"
+      # channel
+      - "127.0.0.1:7575:7575"
+      - "127.0.0.1:7576:7576"
+      - "127.0.0.1:7577:7577"
+      # cash
+      - "127.0.0.1:2555:2555"
+    volumes:
+      - nfs_mapleStory_server:/app
+    networks:
+      - backend_net
+    environment:
+      - server_settings_db_password=${MYSQL_PASSWORD}
+
+    stdin_open: true 
+
+networks:
+  backend_net:
