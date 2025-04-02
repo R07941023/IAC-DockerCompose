@@ -15,6 +15,7 @@ services:
     working_dir: /app
     command: >
       bash -c "
+        rm -f /tmp/.X0-lock &&
         Xvfb :0 -screen 0 1024x768x16 &
         export DISPLAY=:0 &&
         ./run.sh
