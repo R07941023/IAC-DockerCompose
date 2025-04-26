@@ -4,7 +4,7 @@ volumes:
   nfs_YYLUI:
     driver_opts:
       type: nfs
-      o: "addr=192.168.100.145,nolock,soft,rw"
+      o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
       device: ":/volume1/backend/project/YYLUI"
 
 services:

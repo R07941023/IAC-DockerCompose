@@ -1,11 +1,9 @@
-version: '3'
-
 volumes:
   nfs_conf:
     driver_opts:
       type: nfs
-      o: "addr=192.168.100.145,nolock,soft,rw"
-      device: ":/volume1/backend/privateCloud/config"
+      o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
+      device: ":/volume1/backend/project/YYLUI/IAC-DockerCompose/nginx"
 
 services:
   nginx:
@@ -13,11 +11,19 @@ services:
     container_name: nginx
     hostname: nginx
     ports:
-      - "10802:80"
+      - "443:443"
     networks:
       - backend_net
     volumes:
-      - nfs_conf:/mnt
+      - nfs_conf:/mnt/nginx_conf
+    command: >
+      /bin/bash -c "cp -r /mnt/nginx_conf/* /etc/nginx/conf.d/ && nginx -g 'daemon off;'"
+    extra_hosts:
+      - "dashboard.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "argocd.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "adminer.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "grafana.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "open-webui.mydormroom.com:${HOST_DOCKER_INTERNAL}"
     restart: always
 
 networks:

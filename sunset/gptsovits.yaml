@@ -4,22 +4,22 @@ volumes:
   nfs_gptsovits_model:
     driver_opts:
       type: nfs
-      o: "addr=192.168.100.145,nolock,soft,rw"
+      o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
       device: ":/volume1/backend/storage/gptsovits/model"
   nfs_gptsovits_output:
     driver_opts:
       type: nfs
-      o: "addr=192.168.100.145,nolock,soft,rw"
+      o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
       device: ":/volume1/backend/storage/gptsovits/output"
   nfs_gptsovits_reference:
     driver_opts:
       type: nfs
-      o: "addr=192.168.100.145,nolock,soft,rw"
+      o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
       device: ":/volume1/backend/storage/gptsovits/reference"
   nfs_gptsovits_SoVITS_weights:
     driver_opts:
       type: nfs
-      o: "addr=192.168.100.145,nolock,soft,rw"
+      o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
       device: ":/volume1/backend/storage/gptsovits/SoVITS_weights"
 
 services:
