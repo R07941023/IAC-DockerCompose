@@ -3,6 +3,10 @@ This project leverages Docker Compose for container management and uses Infrastr
 
 # Set .env file
 ```env
+# nginx
+HOST_DOCKER_INTERNAL=
+NAS_SERVER_IP=
+
 # DB
 MYSQL_ROOT_PASSWORD=
 MYSQL_DATABASE=
@@ -18,8 +22,14 @@ JUPYTER_PASSWORD=
 
 # vscode
 VSCODE_YYLUI_PASSWORD=
-VSCODE_CHIEH_PASSWORD=
 VSCODE_QIAO_PASSWORD=
+
+# facefusion
+FACEFUSION_PASSWORD=
+FACEFUSION_USER1=
+FACEFUSION_PASSWORD1=
+FACEFUSION_USER2=
+FACEFUSION_PASSWORD2=
 ```
 
 # Start Docker Compose services
