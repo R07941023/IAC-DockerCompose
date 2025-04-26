@@ -15,9 +15,15 @@ services:
     networks:
       - backend_net
     volumes:
-      - nfs_conf:/etc/nginx
+      - nfs_conf:/mnt/nginx_conf
+    command: >
+      /bin/bash -c "cp -r /mnt/nginx_conf/* /etc/nginx/conf.d/ && nginx -g 'daemon off;'"
     extra_hosts:
       - "dashboard.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "argocd.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "adminer.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "grafana.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "open-webui.mydormroom.com:${HOST_DOCKER_INTERNAL}"
     restart: always
 
 networks:
