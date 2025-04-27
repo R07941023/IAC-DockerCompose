@@ -1,0 +1,24 @@
+volumes:
+  nfs_frp:
+    driver_opts:
+      type: nfs
+      o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
+      device: ":/volume1/backend/project/YYLUI/IAC-DockerCompose/frpc"
+    
+services:
+  frpc:
+    image: snowdreamtech/frpc
+    hostname: "frpc"
+    container_name: frpc
+    restart: always
+    environment:
+      FRP_TOKEN: ${FRP_TOKEN}
+    volumes:
+      - nfs_frp:/etc/frp/
+      # - /e/frpc.toml:/etc/frp/frpc.toml    
+    networks:
+      - backend_net
+
+
+networks:
+  backend_net:

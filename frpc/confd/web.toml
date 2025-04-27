@@ -1,0 +1,6 @@
+[[proxies]]
+name = "web"
+type = "https"
+localIP = "nginx"
+localPort = 443
+customDomains = ["mydormroom.ddns.net"]

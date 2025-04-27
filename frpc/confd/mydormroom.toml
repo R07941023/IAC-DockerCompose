@@ -1,0 +1,13 @@
+[[proxies]]
+name = "host_rdp"
+type = 'tcp'
+localIP = "host.docker.internal"
+localPort = 3389
+remotePort = 13389
+
+[[proxies]]
+name = "host_ssh"
+type = 'tcp'
+localIP = "host.docker.internal"
+localPort = 22
+remotePort = 10022
