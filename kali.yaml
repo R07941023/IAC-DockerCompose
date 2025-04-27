@@ -11,6 +11,7 @@ services:
   kali:
     image: yenyinglu/kali
     restart: always
+    hostname: "kali"
     privileged: true
     tty: true
     ports:
