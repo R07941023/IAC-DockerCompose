@@ -1,6 +1,13 @@
 [[proxies]]
-name = "web"
+name = "minio"
 type = "https"
 localIP = "nginx"
 localPort = 443
-customDomains = ["mydormroom.ddns.net"]
+customDomains = ["minio.mydormroom.dpdns.org"]
+
+[[proxies]]
+name = "gitlab"
+type = "https"
+localIP = "nginx"
+localPort = 443
+customDomains = ["minio.mydormroom.dpdns.org"]
