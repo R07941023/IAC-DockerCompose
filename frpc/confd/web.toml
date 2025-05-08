@@ -3,11 +3,4 @@ name = "minio"
 type = "https"
 localIP = "nginx"
 localPort = 443
-customDomains = ["minio.mydormroom.dpdns.org"]
-
-[[proxies]]
-name = "gitlab"
-type = "https"
-localIP = "nginx"
-localPort = 443
-customDomains = ["minio.mydormroom.dpdns.org"]
+customDomains = ["*.mydormroom.dpdns.org", "*.ddns.net"]
