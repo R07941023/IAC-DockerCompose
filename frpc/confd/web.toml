@@ -1,5 +1,5 @@
 [[proxies]]
-name = "minio"
+name = "mydormroom"
 type = "https"
 localIP = "nginx"
 localPort = 443
