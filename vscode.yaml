@@ -19,9 +19,9 @@ services:
     container_name: vscode
     hostname: "vscode-server"
     ports:
-      - "127.0.0.1:30101:3000"
-      - "127.0.0.1:30810:8090"
-      - "127.0.0.1:30201:8091"
+      - "30101:3000"
+      - "30810:8090"
+      - "30201:8091"
     volumes:
       - nfs_YYLUI:/home/coder/project
       - nfs_vscode_config:/home/coder/.config/code-server
