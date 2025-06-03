@@ -1,5 +1,5 @@
 volumes:
-  nfs_conf:
+  nfs_nginx:
     driver_opts:
       type: nfs
       o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
@@ -15,7 +15,7 @@ services:
     networks:
       - backend_net
     volumes:
-      - nfs_conf:/mnt/nginx_conf
+      - nfs_nginx:/mnt/nginx_conf
     command: >
       /bin/bash -c "cp -r /mnt/nginx_conf/* /etc/nginx/conf.d/ && nginx -g 'daemon off;'"
     extra_hosts:

@@ -1,0 +1,27 @@
+[[proxies]]
+name = "kali_rdp"
+type = 'tcp'
+localIP = "kali"
+localPort = 3389
+remotePort = 23389
+
+[[proxies]]
+name = "kali_ssh"
+type = 'tcp'
+localIP = "kali"
+localPort = 22
+remotePort = 20022
+
+[[proxies]]
+name = "kali_httpserver"
+type = 'tcp'
+localIP = "kali"
+localPort = 28000
+remotePort = 28000
+
+[[proxies]]
+name = "kali_httpserver"
+type = 'tcp'
+localIP = "kali"
+localPort = 24444
+remotePort = 24444

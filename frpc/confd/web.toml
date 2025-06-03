@@ -1,0 +1,6 @@
+[[proxies]]
+name = "mydormroom"
+type = "https"
+localIP = "nginx"
+localPort = 443
+customDomains = ["*.mydormroom.dpdns.org", "*.ddns.net"]

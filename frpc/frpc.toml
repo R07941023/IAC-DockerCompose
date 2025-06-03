@@ -1,0 +1,5 @@
+serverAddr = "server.mydormroom.dpdns.org"
+serverPort = 7000
+auth.method = "token"
+auth.token = "{{ .Envs.FRP_TOKEN }}"
+includes = ["/etc/frp/confd/*.toml"]

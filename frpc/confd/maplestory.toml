@@ -1,0 +1,34 @@
+[[proxies]]
+name = "maplestory_login"
+type = 'tcp'
+localIP = "host.docker.internal"
+localPort = 30084
+remotePort = 8484
+
+[[proxies]]
+name = "maplestory_cash"
+type = 'tcp'
+localIP = "host.docker.internal"
+localPort = 30025
+remotePort = 2555
+
+[[proxies]]
+name = "maplestory_channel_1"
+type = 'tcp'
+localIP = "host.docker.internal"
+localPort = 30075
+remotePort = 7575
+
+[[proxies]]
+name = "maplestory_channel_2"
+type = 'tcp'
+localIP = "host.docker.internal"
+localPort = 30076
+remotePort = 7576
+
+[[proxies]]
+name = "maplestory_channel_3"
+type = 'tcp'
+localIP = "host.docker.internal"
+localPort = 30077
+remotePort = 7577

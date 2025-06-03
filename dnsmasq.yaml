@@ -1,0 +1,22 @@
+volumes:
+  nfs_dnsmasq:
+    driver_opts:
+      type: nfs
+      o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
+      device: ":/volume1/backend/project/YYLUI/IAC-DockerCompose/dnsmasq"
+
+services:
+  dnsmasq:
+    image: jpillora/dnsmasq
+    container_name: dnsmasq
+    restart: unless-stopped
+    ports:
+      - "53:53/udp" # DNS port
+    volumes:
+      - nfs_dnsmasq:/etc/dnsmasq.d
+    command:
+      - --log-queries
+      - --no-resolv
+      - --server=1.1.1.1
+      - --server=1.0.0.1
+      - --conf-dir=/etc/dnsmasq.d

@@ -3,6 +3,9 @@ This project leverages Docker Compose for container management and uses Infrastr
 
 # Set .env file
 ```env
+# frp
+FRP_TOKEN=
+
 # nginx
 HOST_DOCKER_INTERNAL=
 NAS_SERVER_IP=
