@@ -1,7 +1,13 @@
 # Introduction
+
 This project leverages Docker Compose for container management and uses Infrastructure as Code (IaC) for automated infrastructure deployment.
 
+# Architecture
+
+![architecture](./images/architecture.jpg)
+
 # Set .env file
+
 ```env
 # frp
 FRP_TOKEN=
@@ -36,19 +42,23 @@ FACEFUSION_PASSWORD2=
 ```
 
 # Start Docker Compose services
+
 ```bash
 docker-compose -f {fileName} up -d
 ```
 
 # Stop Docker Compose service
+
 ```bash
 docker-compose f {fileName} down
 ```
 
 # Gitlab
+
 https://medium.com/@a5822358/gitlab-72a1b32b5b5b
 
 # docker desktop
+
 ```bash
 {
   "builder": {
