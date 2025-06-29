@@ -7,27 +7,41 @@ volumes:
       o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
       device: ":/volume1/backend/project/qiao"
 
-  nfs_vscode_config:
+  nfs_vscode_qiao_ssh:
     driver_opts:
       type: nfs
       o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
-      device: ":/volume1/backend/compiler/vscode/config" 
+      device: ":/volume1/backend/storage/vscode_qiao/.ssh"
+      
+  nfs_vscode_qiao_local:
+    driver_opts:
+      type: nfs
+      o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
+      device: ":/volume1/backend/storage/vscode_qiao/.local"
 
 services:
   vscode-qiao:
-    image: yenyinglu/vscode
+    image: codercom/code-server:latest
     container_name: vscode-qiao
     hostname: "vscode-qiao"
+    user: root
     ports:
-      - "30811:8090"
       - "30103:3000"
+      - "30813:8080"
     volumes:
-      - nfs_qiao:/home/coder/project
-      - nfs_vscode_config:/home/coder/.config/code-server
+      - nfs_qiao:/mnt/project
+      - nfs_vscode_qiao_ssh:/mnt/.ssh:ro
+      - nfs_vscode_qiao_local:/root/.local
     environment:
       - WATCHPACK_POLLING=true
       - PASSWORD=${VSCODE_QIAO_PASSWORD}
-    command: ["code-server", "--auth", "password", "--disable-telemetry", "--bind-addr", "0.0.0.0:8090"]
+    entrypoint: >
+      /bin/sh -c "
+      cp -r /mnt/.ssh /root/.ssh && 
+      chmod 700 /root/.ssh &&
+      chmod 600 /root/.ssh/* &&
+      code-server --auth password --disable-telemetry --bind-addr 0.0.0.0:8090 /root
+      "
     networks:
       - backend_net
     restart: always
