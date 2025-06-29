@@ -31,11 +31,13 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - nfs_YYLUI:/mnt/project
+      - E:/project:/mnt/app
       - nfs_vscode_ssh:/mnt/.ssh:ro
       - nfs_vscode_local:/root/.local
     environment:
       - WATCHPACK_POLLING=true
       - PASSWORD=${VSCODE_YYLUI_PASSWORD}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
     entrypoint: >
       /bin/sh -c "
       cp -r /mnt/.ssh /root/.ssh && 
