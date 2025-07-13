@@ -24,6 +24,7 @@ services:
       - "adminer.mydormroom.com:${HOST_DOCKER_INTERNAL}"
       - "grafana.mydormroom.com:${HOST_DOCKER_INTERNAL}"
       - "open-webui.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "n8n.mydormroom.com:${HOST_DOCKER_INTERNAL}"
     restart: always
 
 networks:
