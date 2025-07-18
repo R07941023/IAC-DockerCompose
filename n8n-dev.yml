@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  n8n-dev:
+    image: n8nio/n8n
+    restart: always
+    container_name: n8n-dev
+    networks:
+      - backend_net
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=admin123
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - N8N_CUSTOM_EXTENSIONS=/home/node/.n8n/custom
+    volumes:
+      - E:/n8n-dev:/home/node/.n8n
+
+
+networks:
+  backend_net:
