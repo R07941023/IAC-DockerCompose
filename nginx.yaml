@@ -28,6 +28,7 @@ services:
       - "redis-commander.mydormroom.com:${HOST_DOCKER_INTERNAL}"
       - "minio.mydormroom.com:${HOST_DOCKER_INTERNAL}"
       - "mongo-express.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "prometheus.mydormroom.com:${HOST_DOCKER_INTERNAL}"
     restart: always
 
 networks:
