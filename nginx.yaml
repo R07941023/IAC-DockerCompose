@@ -29,6 +29,7 @@ services:
       - "minio.mydormroom.com:${HOST_DOCKER_INTERNAL}"
       - "mongo-express.mydormroom.com:${HOST_DOCKER_INTERNAL}"
       - "prometheus.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "keycloak.mydormroom.com:${HOST_DOCKER_INTERNAL}"
     restart: always
 
 networks:
