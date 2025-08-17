@@ -31,6 +31,7 @@ services:
       - "prometheus.mydormroom.com:${HOST_DOCKER_INTERNAL}"
       - "keycloak.mydormroom.com:${HOST_DOCKER_INTERNAL}"
       - "microservice-template.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "konga.mydormroom.com:${HOST_DOCKER_INTERNAL}"
     restart: always
 
 networks:
