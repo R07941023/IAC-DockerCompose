@@ -1,0 +1,52 @@
+version: '3'
+
+volumes:
+  nfs_fang:
+    driver_opts:
+      type: nfs
+      o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
+      device: ":/volume1/backend/project/fang"
+
+  nfs_vscode_fang_ssh:
+    driver_opts:
+      type: nfs
+      o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
+      device: ":/volume1/backend/storage/vscode_fang/.ssh"
+      
+  nfs_vscode_fang_local:
+    driver_opts:
+      type: nfs
+      o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
+      device: ":/volume1/backend/storage/vscode_fang/.local"
+
+services:
+  vscode-fang:
+    image: codercom/code-server:latest
+    container_name: vscode-fang
+    hostname: "vscode-fang"
+    user: coder
+    ports:
+      - "30103:3000"
+      - "30813:8080"
+    volumes:
+      - nfs_fang:/mnt/project
+      - nfs_vscode_fang_ssh:/mnt/.ssh:ro
+      - nfs_vscode_fang_local:/root/.local
+    environment:
+      - WATCHPACK_POLLING=true
+      - PASSWORD=${VSCODE_FANG_PASSWORD}
+    entrypoint: >
+      /bin/sh -c "
+      cp -r /mnt/.ssh /home/coder/.ssh && 
+      chmod 700 /home/coder/.ssh &&
+      chmod 600 /home/coder/.ssh/* &&
+      mkdir -p /home/coder/project &&
+      code-server --auth password --disable-telemetry --bind-addr 0.0.0.0:8090 /home/coder/project
+      "
+    networks:
+      - backend_net
+    restart: always
+
+networks:
+  backend_net:
+
