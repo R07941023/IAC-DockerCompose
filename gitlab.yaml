@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 volumes:
   nfs_storage:
@@ -6,6 +6,12 @@ volumes:
       type: nfs
       o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
       device: ":/volume1/backend/storage"
+  nfs_gitlab_runner:
+    driver_opts:
+      type: nfs
+      o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
+      device: ":/volume1/backend/storage/gitlab/runner"
+  runner-config:
 
 services:
   gitlab:
@@ -15,9 +21,31 @@ services:
     hostname: "gitlab"
     volumes:
       - nfs_storage:/mnt
-    ports:
-      - "30832:80"
-      - "30500:443"
+    networks:
+      - backend_net
+
+  init-runner-config:
+    image: alpine:latest
+    volumes:
+      - nfs_gitlab_runner:/mnt
+      - runner-config:/config
+    command: ["/bin/sh", "-c", "cp /mnt/config.toml /config/config.toml"]
+    restart: "no"
+    depends_on:
+      - gitlab
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:latest
+    container_name: gitlab-runner
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - runner-config:/etc/gitlab-runner
+    depends_on:
+      - init-runner-config
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     networks:
       - backend_net
 

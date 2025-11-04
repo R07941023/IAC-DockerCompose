@@ -6,29 +6,45 @@ volumes:
       type: nfs
       o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
       device: ":/volume1/backend/project/YYLUI"
-
-  nfs_vscode_config:
+      
+  nfs_vscode_ssh:
     driver_opts:
       type: nfs
       o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
-      device: ":/volume1/backend/compiler/vscode/config" 
-
+      device: ":/volume1/backend/storage/vscode/.ssh"
+      
+  nfs_vscode_local:
+    driver_opts:
+      type: nfs
+      o: "addr=${NAS_SERVER_IP},nolock,soft,rw"
+      device: ":/volume1/backend/storage/vscode/.local"    
+      
 services:
   vscode-server:
-    image: yenyinglu/vscode
+    image: codercom/code-server:latest
     container_name: vscode
     hostname: "vscode-server"
+    user: root
     ports:
       - "30101:3000"
-      - "30810:8090"
-      - "30201:8091"
+      - "30810:8080"
     volumes:
-      - nfs_YYLUI:/home/coder/project
-      - nfs_vscode_config:/home/coder/.config/code-server
+      - /var/run/docker.sock:/var/run/docker.sock
+      - C:/Users/yenying/.kube/config:/root/.kube/config:ro
+      - nfs_YYLUI:/mnt/project
+      - E:/project:/mnt/app
+      - nfs_vscode_ssh:/mnt/.ssh:ro
+      - nfs_vscode_local:/root/.local
     environment:
       - WATCHPACK_POLLING=true
       - PASSWORD=${VSCODE_YYLUI_PASSWORD}
-    command: ["code-server", "--auth", "password", "--disable-telemetry", "--bind-addr", "0.0.0.0:8090"]
+    entrypoint: >
+      /bin/sh -c "
+      cp -r /mnt/.ssh /root/.ssh && 
+      chmod 700 /root/.ssh &&
+      chmod 600 /root/.ssh/* &&
+      code-server --auth password --disable-telemetry --bind-addr 0.0.0.0:8090 /root
+      "
     networks:
       - backend_net
     restart: always

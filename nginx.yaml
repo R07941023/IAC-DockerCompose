@@ -24,6 +24,17 @@ services:
       - "adminer.mydormroom.com:${HOST_DOCKER_INTERNAL}"
       - "grafana.mydormroom.com:${HOST_DOCKER_INTERNAL}"
       - "open-webui.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "n8n.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "redis-commander.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "minio.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "mongo-express.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "prometheus.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "keycloak.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "microservice-template.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "konga.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "kafka-ui.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "kiali.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "jaeger.mydormroom.com:${HOST_DOCKER_INTERNAL}"
     restart: always
 
 networks:
