@@ -35,6 +35,7 @@ services:
       - "kafka-ui.mydormroom.com:${HOST_DOCKER_INTERNAL}"
       - "kiali.mydormroom.com:${HOST_DOCKER_INTERNAL}"
       - "jaeger.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "cassandra-web.mydormroom.com:${HOST_DOCKER_INTERNAL}"
     restart: always
 
 networks:
