@@ -36,6 +36,7 @@ services:
       - "kiali.mydormroom.com:${HOST_DOCKER_INTERNAL}"
       - "jaeger.mydormroom.com:${HOST_DOCKER_INTERNAL}"
       - "cassandra-web.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "kibana.mydormroom.com:${HOST_DOCKER_INTERNAL}"
     restart: always
 
 networks:
