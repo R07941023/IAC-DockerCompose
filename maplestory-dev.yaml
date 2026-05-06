@@ -28,7 +28,9 @@ services:
       - backend_net
     environment:
       - server_settings_db_password=${MYSQL_PASSWORD}
-
+      - N8N_MAPLESTORY_CHARACTER_URL=${N8N_MAPLESTORY_CHARACTER_URL}
+      - N8N_MAPLESTORY_CHARACTER_USER=${N8N_MAPLESTORY_CHARACTER_USER}
+      - N8N_MAPLESTORY_CHARACTER_PASSWORD=${N8N_MAPLESTORY_CHARACTER_PASSWORD}
     stdin_open: true 
 
 networks:
