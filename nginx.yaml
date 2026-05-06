@@ -40,6 +40,7 @@ services:
       - "langfuse.mydormroom.com:${HOST_DOCKER_INTERNAL}"
       - "litellm.mydormroom.com:${HOST_DOCKER_INTERNAL}"
       - "mcp-context-forge.mydormroom.com:${HOST_DOCKER_INTERNAL}"
+      - "neo4j.mydormroom.com:${HOST_DOCKER_INTERNAL}"
     restart: always
 
 networks:
